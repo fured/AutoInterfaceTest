@@ -8,9 +8,8 @@ import unittest
 import platform
 
 sys.path.append('..')
-from config.env import DataApi as env
-from config.glovarl import DataApi as glovarl
-
+from config.env import Ftest
+from lib.request import Response
 if platform.system() == "Linux":
     import output_style as output
 else:
@@ -21,7 +20,7 @@ else:
 #desc:interface test case
 
 project_name = "Data Api"
-glovarl.project_name = project_name
+Ftest.project_name = project_name
 
 class UserLogin(unittest.TestCase):
     desc = "登录并获取token"
@@ -32,14 +31,17 @@ class UserLogin(unittest.TestCase):
     def test(self):
         headers = {"Content-Type": "application/json"}
         payload = json.dumps({"userName": "sangfor", "rand": 755601452147616764, "domain": "test@sangfor.com", "clientVersion": "1.0.0", "clientProduct": "usability", "auth": "775518362020b951f7d2764ddd2b0650ffe0d818dbdf731e96aeb89a", "clientId": "100"})
-        r = requests.post(env.domainauth+env.auth+"login",data=payload,headers=headers)
-        self.request = r
+        response = requests.post(Ftest.domainauth+Ftest.auth+"login",data=payload,headers=headers)
+        print "POST " + Response.Url(response)
+        self.response = response
+
 
     def tearDown(self):
-        print "ResponseData:"+self.request.text
-        self.assertEqual(self.request.status_code,200)
-        responsedata = json.loads(self.request.text)
-        glovarl.data_token = responsedata["data"]["token"]
+        print "ResponseData:"+self.response.text
+        self.assertEqual(self.response.status_code,200)
+        responsedata = json.loads(self.response.text)
+        Ftest.setGlobalVariable("data_token",responsedata["data"]["token"])
+        print Ftest.data_token
         self.assertEquals(responsedata["code"],0)
         print "test ending!"
 
@@ -50,7 +52,7 @@ class UserData(unittest.TestCase):
         print "start test..."
 
     def test(self):
-        payload = {"token":glovarl.data_token}
+        payload = {"token":Ftest.data_token}
         r = requests.get(env.domain+env.dataapi+"user",params=payload)
         self.request = r
 
@@ -66,9 +68,9 @@ class UserAsset(unittest.TestCase):
         print "start test"
 
     def test(self):
-        payload = {"token":glovarl.data_token}
-        r = requests.get(env.domain+env.dataapi+"asset",params=payload)
-        print "request:"+r.url
+        payload = {"token":Ftest.data_token}
+        r = requests.get(Ftest.domain+Ftest.dataapi+"asset",params=payload)
+        print Response.Url(r)
 
     def tearDown(self):
         print "test ending!"

@@ -1,0 +1,9 @@
+{
+  "domain":"http://192.200.41.231:8001",
+  "domainauth":"http://192.200.41.231:5000",
+  "dataapi":"/data/api/cloudeye/v1/",
+  "auth":"/authority/api/cloudeye/v1/",
+  "testexcel":"DataApi.xlsx",
+  "tablename":"test",
+  "case":"dataapi"
+}
