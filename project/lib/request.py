@@ -23,3 +23,7 @@ class Response(object):
     def Url(response):
         return response.url
 
+    @staticmethod
+    def ResponseTime(response):
+        return  response.elapsed.total_seconds()
+

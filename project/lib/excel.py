@@ -77,6 +77,7 @@ class Excel(object):
 
     def get_case(self,case_no):
         data = self.get_all_info()
+        data_list = []
         case_row = None
         row = 0
         while row < len(data):
@@ -88,19 +89,28 @@ class Excel(object):
             print "The Case Not Exist!"
             exit(0)
             return None
-        return data[row][2]
+        i = 0
+        while i < 3:
+            data_list.append(data[row][i])
+            i = i + 1
+        return data_list
 
     def get_cases(self,dirname):
         dir_data = self.get_dir_tree(dirname)
         if dir_data == False:
             print "The dictory is not Exist"
             exit(0)
+        return dir_data
         row = 0
-        class_list = []
+        data_list = []
         while row < len(dir_data):
-            class_list.append(dir_data[row][len(dir_data[row])-1])
+            class_list = []
+            data_list.append(class_list)
+            class_list.append(dir_data[row][len(dir_data[row]) - 3])
+            class_list.append(dir_data[row][len(dir_data[row]) - 2])
+            class_list.append(dir_data[row][len(dir_data[row]) - 1])
             row = row + 1
-        return class_list
+        return data_list
 
 
     def get_all_tree(self):

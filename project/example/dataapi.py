@@ -11,9 +11,9 @@ sys.path.append('..')
 from config.env import Ftest
 from lib.request import Response
 if platform.system() == "Linux":
-    import output_style as output
+    from lib.linux_log import Flog
 else:
-    import common_style as output
+    from lib.win_log import Flog
 
 #Author:fured
 #date:2018.06.30
@@ -21,6 +21,9 @@ else:
 
 project_name = "Data Api"
 Ftest.project_name = project_name
+
+def print():
+
 
 class UserLogin(unittest.TestCase):
     desc = "登录并获取token"

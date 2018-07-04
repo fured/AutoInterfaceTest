@@ -7,6 +7,7 @@ sys.path.append('..')
 #import testcase.dataapi
 from config.env import Ftest
 from lib.excel import Excel
+from run import Run
 from tools.template import Template
 
 #Auther:fured
@@ -33,18 +34,19 @@ def run_one_testcase(case_no,env_file):
         class_name = Excel(Ftest.testexcel,Ftest.tablename).get_case(case_list[i])
         class_name_list.append(class_name)
         i = i + 1
+    Run().run_one_case(class_name_list)
     #print class_name
     #print sys.path
     #动态添加testcase类
-    sys.path.append("../testcase")
-    imp_module = __import__(Ftest.case)
-    suite_list = []
-    for class_name in class_name_list:
-        case_class = getattr(imp_module, class_name)
-        suite = unittest.TestLoader().loadTestsFromTestCase(case_class)
-        suite_list.append(suite)
-    suite = unittest.TestSuite(suite_list)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    #sys.path.append("../testcase")
+    #imp_module = __import__(Ftest.case)
+    #suite_list = []
+    #for class_name in class_name_list:
+    #    case_class = getattr(imp_module, class_name)
+    #    suite = unittest.TestLoader().loadTestsFromTestCase(case_class)
+    #    suite_list.append(suite)
+    #suite = unittest.TestSuite(suite_list)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
 
 
 def run_dir_testcase(dir_name,env_file):
@@ -54,15 +56,17 @@ def run_dir_testcase(dir_name,env_file):
     dir_name = dir_name.encode("utf-8")
     class_list = Excel(Ftest.testexcel,Ftest.tablename).get_cases(dir_name.decode('utf-8'))
     #动态添加testcase类
-    sys.path.append("../testcase")
-    imp_module = __import__(Ftest.case)
-    suite_list = []
-    for case_name in class_list:
-        case_class = getattr(imp_module,case_name)
-        suite = unittest.TestLoader().loadTestsFromTestCase(case_class)
-        suite_list.append(suite)
-    suite = unittest.TestSuite(suite_list)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    #print class_list
+    Run().run_dir_case(class_list)
+    #sys.path.append("../testcase")
+    #imp_module = __import__(Ftest.case)
+    #suite_list = []
+    #for case_name in class_list:
+    #    case_class = getattr(imp_module,case_name)
+    #    suite = unittest.TestLoader().loadTestsFromTestCase(case_class)
+    #    suite_list.append(suite)
+    #suite = unittest.TestSuite(suite_list)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
 
 
 #suite=unittest.TestSuite()
