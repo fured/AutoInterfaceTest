@@ -2,18 +2,25 @@
 # -*- coding: UTF-8 -*-
 
 import xlrd
-import json
+
 from collections import defaultdict
 
+#Author:fured
+#date:2018.07.01
+#desc:Operation case excel table
+
 class Excel(object):
+    #desc:初始化用例表
+    #parameter:filename:用例表文件名
+    #          talename:用例表名
     def __init__(self,filename,talename):
         self.filename = filename
         self.tablename = talename
 
+    #desc:获取整张表的信息，除了两行标题
     def get_all_info(self):
         #打开文件
         wb = xlrd.open_workbook(self.filename)
-        #print wb.nsheets
         #判断表是否存在
         sheetname = []
         for sheet in wb.sheets():
@@ -34,10 +41,9 @@ class Excel(object):
                     list.append(str(int(ws.cell_value(rows,cols))))
                 else:
                     list.append(ws.cell_value(rows,cols))
-                #print ws.cell_value(rows,cols)
                 cols = cols + 1
             rows = rows + 1
-        #将空格填满
+        #将空格填满，由于表格进行了合并单元格，所以有很多空格
         col = 3
         while col < len(data[0]):
             row = 0
@@ -48,7 +54,7 @@ class Excel(object):
                             data[row][col] = data[row - 1][col]
                 row = row + 1
             col = col + 1
-        #删除空格
+        #删除空格，这时的空格是由于目录各个用例的目录层级不同导致的，应该删除
         cols = len(data[0]) - 1
         row = 0
         while row < len(data):
@@ -62,6 +68,7 @@ class Excel(object):
             row = row + 1
         return data
 
+    #desc：返回所有的案例信息
     def get_all_case(self):
         data = self.get_all_info()
         case_data = []
@@ -75,6 +82,8 @@ class Excel(object):
             row = row + 1
         return case_data
 
+    #desc:返回指定的一个或多个用例信息
+    #parameter：case_no：用例编号
     def get_case(self,case_no):
         data = self.get_all_info()
         data_list = []
@@ -95,6 +104,8 @@ class Excel(object):
             i = i + 1
         return data_list
 
+    #desc:返回指定文件夹中所有的用例信息
+    #parameter:dirname：文件夹的名字
     def get_cases(self,dirname):
         dir_data = self.get_dir_tree(dirname)
         if dir_data == False:
@@ -112,7 +123,7 @@ class Excel(object):
             row = row + 1
         return data_list
 
-
+    #desc：返回整个目录的信息
     def get_all_tree(self):
         data = self.get_all_info()
         i = 0
@@ -123,16 +134,12 @@ class Excel(object):
                 del data[i][0]
                 j = j + 1
             i = i + 1
-        #for a in data:
-        #    print a
         return data
 
+    #desc：返回指定目录的目录树信息
     def get_dir_tree(self,dirname):
         data = self.get_all_info()
-        #for i in data:
-        #    print i
         #找到对应文件夹起始位置
-        #print dirname
         find = False
         dir_col = None
         dir_row = None
@@ -152,8 +159,6 @@ class Excel(object):
             row = row + 1
         if dir_col == None or dir_row == None:
             return False
-        #print dir_row
-        #print dir_col
         #找到对应文件夹结束的行
         dir_last_row = None
         find_row = dir_row + 1
@@ -164,8 +169,6 @@ class Excel(object):
             find_row = find_row + 1
         if dir_last_row == None:
             dir_last_row = len(data)
-
-        #print dir_last_row
         #转换顺序
         dir_data = []
         row = dir_row
@@ -181,14 +184,4 @@ class Excel(object):
                 list.append(data[row][col])
                 col = col + 1
             row = row + 1
-        #for i in dir_data:
-        #    print i
         return dir_data
-
-        #dir_tree = tree()
-        #dir_tree["a"]["b"]["c"]
-        #print json.dumps(dir_tree)
-
-#迭代，以防止出现keyerror，当建不存在时
-def tree():
-    return defaultdict(tree)

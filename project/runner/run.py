@@ -1,19 +1,30 @@
 #!/bin/python
 #-*- coding: UTF-8 -*-
 
-import platform
-import traceback
 import datetime
+import platform
 import time
+import traceback
+
 from config.env import Ftest
 from lib import Fassert
-from lib.request import Record
 from lib import request
+from lib.request import Record
 
+
+if platform.system() == "Linux":
+    from lib.linux_log import Flog
+else:
+    from lib.win_log import Flog
+
+#一个用例在运行过程中的所有断言错误
 ALL_ERROR = []
+#一个用例运行过程中出现的所有异常
 ALL_EXCEPT = []
+
+#一次测试后报告需要的统计信息
+INFO_REPORT = {}
 #example：
-#统计信息
 #INFO_REPORT = {
 #    "suite_name":"Ftest",
 #    "suite_desc":"Ftest desc",
@@ -30,26 +41,23 @@ ALL_EXCEPT = []
 #    "data_size":20.2,#KB
 #    "avg_reponse_time":12#毫秒，ms
 #}
-#单个case的信息
+
+#一次测试后，每个用例的信息
+INFO_CASE = []
+#example：
 #INFO_CASE = [
 #    ["name","method","url","response_time","data_size","ststus_code",{"assert_name":1/0,"assert_name":1/0}],
 #    ["name","method","url","response_time","data_size","ststus_code",{"assert_name":1/0,"assert_name":1/0}]
 #]
-INFO_REPORT = {}
-INFO_CASE = []
+
+#在打印过程中标记目录
 window_dir_sign = ">"
-
-
-
-if platform.system() == "Linux":
-    from lib.linux_log import Flog
-else:
-    from lib.win_log import Flog
 
 class Run(object):
     def __init__(self):
         pass
-
+    #desc:运行指定的一个或几个用力
+    #parameter：case_list:需要运行的案例列表
     def run_one_case(self,case_list):
         imp_module = __import__(Ftest.case)
         name = 'Project: ' + imp_module.project_name
@@ -75,7 +83,6 @@ class Run(object):
                 exce = []
                 ALL_EXCEPT.append(exce)
                 exce.append(case_list[row][0]+case_list[row][1])
-                #Flog.error(str(error))
                 exce.append(str(error))
                 Flog.error(traceback.format_exc())
                 row = row + 1
@@ -84,6 +91,8 @@ class Run(object):
         end()
         return None
 
+    # desc:运行指定文件夹的案例
+    # parameter：case_list:需要运行的案例列表
     def run_dir_case(self,case_list):
         imp_module = __import__(Ftest.case)
         name = "Project: " + imp_module.project_name
@@ -158,10 +167,11 @@ class Run(object):
         end()
         return None
 
+#desc:运行一个案例
+#parameter:class_name:案例的类名
+#          desc:案例的描述信息
 def run(class_name,desc):
     case = class_name()
-    #desc = "-> " + case_list[0]+case_list[1]
-    #Flog.nameout(desc)
     print ""
     case.setUp()
     print ""
@@ -209,6 +219,7 @@ def run(class_name,desc):
     Fassert.Fassert_right_list = []
     Fassert.Fassert_error_list = []
 
+#一次测试结束后的收尾函数
 def end():
     print "END" + "-"* 100
     print ""
@@ -251,8 +262,5 @@ def end():
         response_time  = response_time + INFO_CASE[i][3]
         i = i + 1
     INFO_REPORT["avg_response_time"] = round(response_time / INFO_REPORT["case_count"]["total"],3)
-
-#    print INFO_REPORT
-    #print INFO_CASE
     return None
 

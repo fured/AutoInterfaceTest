@@ -2,107 +2,113 @@
 # -*- coding: UTF-8 -*-
 
 import json
-import requests
 import sys
+import requests
 import unittest
+import platform
 
-sys.path.append('..')
 from config.env import Ftest
+from lib.request import Response
+from lib.request import Request
+from lib import Fassert
+if platform.system() == "Linux":
+    from lib.linux_log import Flog
+else:
+    from lib.win_log import Flog
 
+#Author:fured
+#date:2018.06.30
+#desc:interface test case
 
-#Author:
-#date:
-#desc:
-
-PROJECT_NAME = ""
-
-class UserLogin(unittest.TestCase):
+project_name = "Data Api"
+desc = ""
+class UserLogin(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 
 
-class UserLogin(unittest.TestCase):
+class UserAsset(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 
 
-class UserLogin(unittest.TestCase):
+class UserAssetTokenWrong(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 
 
-class UserLogin(unittest.TestCase):
+class UserAssetNoPam(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 
 
-class UserLogin(unittest.TestCase):
+class UserData(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 
 
-class UserLogin(unittest.TestCase):
+class UserDataTokenWrong(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 
 
-class UserLogin(unittest.TestCase):
+class UserDataNoPam(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 

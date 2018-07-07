@@ -8,18 +8,14 @@ import json
 #desc:Set the environment variables required for the interface test
 
 
+#处理环境变量和全局变量
 class Ftest(object):
-    #domain = "http://192.200.41.231:8000"
-    #dataapi = "/data/api/cloudeye/v1/"
-    #domainauth = "http://192.200.41.231:5000"
-    #auth = "/authority/api/cloudeye/v1/"
-    #test 目录文件及表明
-    #testexcel = "DataApi.xlsx"
-    #tablename = "test"
-    #test case 文件名
-    #case = "dataapi"
+#环境变量中必须有的字段：testexcel = "DataApi.xlsx"
+#                   tablename = "test"
+#                   case = "dataapi"
 
-
+    #desc:初始化环境变量
+    #parameter：env_file:环境变量文件，json文件（必选）
     def __init__(self,env_file):
         with open(env_file, "r") as fp:
             env_json = json.load(fp)
@@ -34,6 +30,8 @@ class Ftest(object):
         for key,value in env_json.items():
             setattr(Ftest,key,value)
 
+    #desc:获取环境变量
+    #parameter:key:需要获取的环境变量的键值
     def getEnvironmentVariable(self,key):
         if self.env_json.has_key(key):
             return self.env_json[key]
@@ -43,10 +41,15 @@ class Ftest(object):
     def setEnvironmentVariable(self,env_file):
         pass
 
+    #desc:设置全局变量
+    #parameter：key：需要设置的全局变量的键值
+    #           vaule：需要设置的全局变量的值
     @staticmethod
     def setGlobalVariable(key,vaule):
         setattr(Ftest,key,vaule)
 
+    #desc：获取全局变量
+    #parameter：key:需要获取的全局变量的键值
     @staticmethod
     def getGlobalVariable(key):
         return Ftest.key

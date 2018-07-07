@@ -7,7 +7,6 @@ import requests
 import unittest
 import platform
 
-sys.path.append('..')
 from config.env import Ftest
 from lib.request import Response
 from lib.request import Request

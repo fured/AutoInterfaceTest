@@ -3,7 +3,7 @@
 
 #Author:fured
 #date:2018.06.30
-#desc:Define print format
+#desc:Linux 有颜色输出
 
 STYLE = {
     'fore': {

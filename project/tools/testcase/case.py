@@ -1,13 +1,13 @@
 
-class CLASS_NAME(unittest.TestCase):
+class CLASS_NAME(object):
     desc = "DESC"
 
     def setUp(self):
-        print "start test..."
+        Flog.output("start test...")
 
     def test(self):
 
 
     def tearDown(self):
-        print "test ending!"
+        Flog.output("start end.")
 

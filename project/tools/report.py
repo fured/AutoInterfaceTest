@@ -3,20 +3,26 @@
 
 import os
 import re
-from runner import run
-from bs4 import BeautifulSoup
-#from runner import run
+
 #Auther:fured
 #date:2018.07.02
 #desc:Generate test report
 
-TEMPLATEPATH =  os.environ.get("TEMPLATEPATH")
+#模板的路径，之前设置了环境变量
+TEMPLATEPATH = os.environ.get("TEMPLATEPATH")
 
 class Report(object):
+
+    #desc：初始化Report类
+    #parameter：case_data:用例信息
+    #           report_name:报告文件名
     def __init__(self,case_data,report_name):
         self.case_data = case_data
-        self.report_name =  report_name
+        self.report_name = report_name
 
+    #desc：生成一个或者指定的几个案例的运行报告
+    #parameter：show_data：案例信息
+    #          show_case:每个运行过程中的信息
     def generate_one_html(self,show_data,show_case):
         fp_report = open(self.report_name,"w")
         write_header(fp_report,show_data)
@@ -38,6 +44,9 @@ class Report(object):
         fp_report.close()
         return None
 
+    # desc：生成指定文件夹中案例的运行报告
+    # parameter：show_data：案例信息
+    #           show_case:每个运行过程中的信息
     def generate_dir_html(self,show_data,show_case):
         fp_report = open(self.report_name,"w")
         write_header(fp_report,show_data)
@@ -98,21 +107,13 @@ class Report(object):
                 write_dir_end(fp_report)
             pre_dir_name = dir_name
             row = row + 1
-
-
         write_end(fp_report)
         fp_report.close()
         return None
 
+#desc:写报告html文件的头信息
 def write_header(fp,show_data):
     fp_header = open(TEMPLATEPATH+"/report/header.html", "r")
-    #fp_header = open("report/header.html", "r")
-    #html_str = fp_header.read()
-    #soup = BeautifulSoup(html_str,"html.parser",from_encoding="utf-8")
-    #soup.select("#suite_name")[0].string = ("aaaaaaa")
-    #fp = open("test.html","w")
-    #fp.write(soup.prettify().encode("utf8"))
-    #fp.close()
     line_list = fp_header.readlines()
     for line in line_list:
         line = re.sub("SUITE_NAME",show_data["suite_name"], line)
@@ -128,6 +129,7 @@ def write_header(fp,show_data):
         fp.write(line)
     fp_header.close()
 
+#desc:写报告html文件中目录的头信息
 def write_dir_header(fp,dir_name):
     fp_dir_header = open(TEMPLATEPATH+"/report/dir_header.html")
     line_list = fp_dir_header.readlines()
@@ -136,6 +138,7 @@ def write_dir_header(fp,dir_name):
         fp.write(line.encode("utf8"))
     fp_dir_header.close()
 
+#desc:写报告html文件中目录的尾信息
 def write_dir_end(fp):
     fp_dir_end = open(TEMPLATEPATH + "/report/dir_end.html")
     line_list = fp_dir_end.readlines()
@@ -143,6 +146,7 @@ def write_dir_end(fp):
         fp.write(line)
     fp_dir_end.close()
 
+#desc：写案例的信息
 def write_case(fp,show_case):
     fp_case = open(TEMPLATEPATH+"/report/case.html","r")
     line_list = fp_case.readlines()
@@ -151,7 +155,6 @@ def write_case(fp,show_case):
             fp.write(line)
         fp_case.close()
         return None
-
     for line in line_list:
         if show_case != None:
             line = re.sub("CASE_NAME", show_case[0],line)
@@ -171,6 +174,7 @@ def write_case(fp,show_case):
         fp.write(line.encode("utf-8"))
     fp_case.close()
 
+#desc:写报告html文件的尾信息
 def write_end(fp):
     fp_end = open(TEMPLATEPATH+"/report/end.html","r")
     line_list = fp_end.readlines()

@@ -1,15 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import chardet
-import unittest
-import sys,os
+
+import os
 import re
-sys.path.append('..')
-#import testcase.dataapi
 from config.env import Ftest
 from lib.excel import Excel
 
-TEMPLATEPATH =  os.environ.get("TEMPLATEPATH")
+#获取模板的路径，之前设置了环境变量
+TEMPLATEPATH = os.environ.get("TEMPLATEPATH")
 
 #Auther:fured
 #date:2018.07.01
@@ -36,14 +34,10 @@ class Template(object):
         fp_case.close()
         row = 0
         while row < len(case_list):
-            #print chardet.detect(line_list[1])
-            #case_list[row][0] = case_list[row][0].decode("utf-8")
-            #case_list[row][0] = case_list[row][0].encode("ascii")
-            #print chardet.detect(line_list[1])
             line_list[1] = re.sub("CLASS_NAME", case_list[row][1], line_list[1])
-            #line_list[1] = re.sub("DESC",case_list[row][0],line_list[1])
             for line in line_list:
                 fp_case_file.write(line)
+            line_list[1] = 'class CLASS_NAME(object):\n'
             row = row + 1
 
     def generate_file(self,filename):

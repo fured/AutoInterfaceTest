@@ -4,7 +4,7 @@
 
 #Author:fured
 #date:2018-07-03
-#desc:Output setting for windows operating
+#desc:Output setting for Linux operating
 
 #亮白色
 FOREGROUND_BringWhite = '\033[1;37m'

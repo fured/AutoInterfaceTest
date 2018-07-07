@@ -2,6 +2,8 @@
 # encoding: utf-8
 import ctypes
 
+#desc：windows命令行界面，有颜色输出
+
 STD_INPUT_HANDLE = -10
 STD_OUTPUT_HANDLE = -11
 STD_ERROR_HANDLE = -12
