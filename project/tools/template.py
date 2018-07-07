@@ -9,6 +9,7 @@ sys.path.append('..')
 from config.env import Ftest
 from lib.excel import Excel
 
+TEMPLATEPATH =  os.environ.get("TEMPLATEPATH")
 
 #Auther:fured
 #date:2018.07.01
@@ -20,7 +21,7 @@ class Template(object):
         self.tablename = tablename
 
     def write_header(self,fp_case_file):
-        fp_header = open("../tools/header.py", "r")
+        fp_header = open(TEMPLATEPATH+"/testcase/header.py", "r")
         line_list = fp_header.readlines()
         for line in line_list:
             fp_case_file.write(line)
@@ -30,7 +31,7 @@ class Template(object):
         case_list = Excel(self.filename,self.tablename).get_all_case()
         if len(case_list) == 0:
             print "The table:" + Ftest.tablename + "not test case!"
-        fp_case = open("../tools/case.py","r")
+        fp_case = open(TEMPLATEPATH+"/testcase/case.py","r")
         line_list = fp_case.readlines()
         fp_case.close()
         row = 0
@@ -39,7 +40,7 @@ class Template(object):
             #case_list[row][0] = case_list[row][0].decode("utf-8")
             #case_list[row][0] = case_list[row][0].encode("ascii")
             #print chardet.detect(line_list[1])
-            line_list[0] = re.sub("CLASS_NAME", case_list[row][1], line_list[0])
+            line_list[1] = re.sub("CLASS_NAME", case_list[row][1], line_list[1])
             #line_list[1] = re.sub("DESC",case_list[row][0],line_list[1])
             for line in line_list:
                 fp_case_file.write(line)

@@ -19,100 +19,100 @@ Fassert_right_list = []
 #a == b
 def equal(message,compare_a,compare_b):
     if type(compare_a) != type(compare_b):
-        Fassert_error_list.append(ERROR_SIGN+message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
         return None
     if compare_a != compare_b:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append( message)
         #Flog.error(ERROR_SIGN+message)
     else:
-        Fassert_right_list.append(RIGHT_SIGN+message)
+        Fassert_right_list.append(message)
         #Flog.right(RIGHT_SIGN+message)
     return None
 
 #a != b
 def unequal(message,compare_a,compare_b):
     if compare_a != compare_b:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append(message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
     return None
 
 #a > b
 def greater(message,compare_a,compare_b):
     if type(compare_a) != type(compare_b):
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
         return None
     if compare_a > compare_b:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append(message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
     return None
 
 #a < b
 def less(message,compare_a,compare_b):
     if type(compare_a) != type(compare_b):
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
         return None
     if compare_a < compare_b:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append(message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
     return None
 
 #a <= b
 def lessequal(message,compare_a,compare_b):
     if type(compare_a) != type(compare_b):
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append( message)
         #Flog.error(ERROR_SIGN+message)
         return None
     if compare_a <= compare_b:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append( message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append( message)
         #Flog.error(ERROR_SIGN+message)
     return None
 
 #a >= b
 def greaterequal(message,compare_a,compare_b):
     if type(compare_a) != type(compare_b):
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append( message)
         #Flog.error(ERROR_SIGN+message)
         return None
     if compare_a >= compare_b:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append( message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append( message)
         #Flog.error(ERROR_SIGN+message)
     return None
 
 #a is True
 def true(message,compare_a):
     if compare_a is True:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append( message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append( message)
         #Flog.error(ERROR_SIGN+message)
     return None
 
 #a is False
 def false(message,compare_a):
     if compare_a is False:
-        Fassert_right_list.append(RIGHT_SIGN + message)
+        Fassert_right_list.append(message)
         #Flog.right(RIGHT_SIGN+message)
     else:
-        Fassert_error_list.append(ERROR_SIGN + message)
+        Fassert_error_list.append(message)
         #Flog.error(ERROR_SIGN+message)
     return None
 

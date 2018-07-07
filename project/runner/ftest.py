@@ -8,23 +8,21 @@ sys.path.append('..')
 from config.env import Ftest
 from lib.excel import Excel
 from run import Run
+import run
 from tools.template import Template
+from tools.report import Report
 
 #Auther:fured
 #date:2018.07.01
 #desc:enter
 
-def get_case_file(filename):
-    if len(filename.split(".")) != 2 or filename.split(".")[1] != "py":
-        print "Filename is invalid!"
-        print "Please refer to the follow..."
-        usage()
-        exit(0)
+def get_case_file(filename,env_file):
+    Ftest.init(env_file)
     template = Template(Ftest.testexcel,Ftest.tablename)
     template.generate_file(filename)
 
 
-def run_one_testcase(case_no,env_file):
+def run_one_testcase(case_no,env_file,report_name = None):
     # 初始化环境
     Ftest.init(env_file)
     case_list = case_no.split(",")
@@ -35,29 +33,30 @@ def run_one_testcase(case_no,env_file):
         class_name_list.append(class_name)
         i = i + 1
     Run().run_one_case(class_name_list)
-    #print class_name
-    #print sys.path
-    #动态添加testcase类
-    #sys.path.append("../testcase")
-    #imp_module = __import__(Ftest.case)
-    #suite_list = []
-    #for class_name in class_name_list:
-    #    case_class = getattr(imp_module, class_name)
-    #    suite = unittest.TestLoader().loadTestsFromTestCase(case_class)
-    #    suite_list.append(suite)
-    #suite = unittest.TestSuite(suite_list)
-    #unittest.TextTestRunner(verbosity=2).run(suite)
+    if report_name != None:
+        report = Report(class_name_list,report_name)
+        report.generate_one_html(run.INFO_REPORT,run.INFO_CASE)
+        pass
+    return None
 
 
-def run_dir_testcase(dir_name,env_file):
+def run_dir_testcase(dir_name,env_file,report_name = None):
     #初始化环境
     Ftest.init(env_file)
     dir_name = dir_name.decode("GB2312")
     dir_name = dir_name.encode("utf-8")
     class_list = Excel(Ftest.testexcel,Ftest.tablename).get_cases(dir_name.decode('utf-8'))
-    #动态添加testcase类
     #print class_list
     Run().run_dir_case(class_list)
+    if report_name != None:
+
+        report = Report(class_list,report_name)
+        report.generate_dir_html(run.INFO_REPORT,run.INFO_CASE)
+
+        pass
+    return None
+    #动态添加testcase类
+    #print class_list
     #sys.path.append("../testcase")
     #imp_module = __import__(Ftest.case)
     #suite_list = []
@@ -167,9 +166,9 @@ def usage():
 
 if __name__ == "__main__":
     option = ["run","info","tool"]
-    option_run = ["--only","-o","--dir","-d","--env","-e"]
+    option_run = ["--only","-o","--dir","-d","--env","-e","--report"]
     option_info = ["--tree","-t","--dir","-d","--env","-e"]
-    option_tool = ["--generate","-g"]
+    option_tool = ["--generate","-g","--env","-e"]
     argvs = sys.argv
 
     if len(argvs) < 2:
@@ -188,20 +187,7 @@ if __name__ == "__main__":
             usage()
             exit(0)
         if argvs[2] == "--only" or argvs[2] == "-o":
-            if len(argvs) != 6:
-                usage()
-                exit(0)
-            if argvs[4] == "--env" or argvs[4] == "-e":
-                if argvs[5].split(".")[1] != "json":
-                    print "Enviorment file is invliad!"
-                    exit(0)
-                run_one_testcase(argvs[3],argvs[5])
-                exit(0)
-            else:
-                usage()
-                exit(0)
-        if argvs[2] == "--dir" or argvs[2] == "-d":
-            if len(argvs) != 6:
+            if len(argvs) < 6:
                 usage()
                 exit(0)
             if argvs[4] == "--env" or argvs[4] == "-e":
@@ -210,6 +196,40 @@ if __name__ == "__main__":
                     exit(0)
                 if argvs[5].split(".")[1] != "json":
                     print "Enviorment file is invliad!"
+                    exit(0)
+                if len(argvs) == 8 and argvs[6] == "--report":
+                    if len(argvs[7].split(".")) !=2:
+                        print "Report file name is invlid!"
+                        exit(0)
+                    if argvs[7].split(".")[1] != "html":
+                        print "Report file name is invlid!"
+                        exit(0)
+                    run_one_testcase(argvs[3],argvs[5],argvs[7])
+                    exit(0)
+                run_one_testcase(argvs[3],argvs[5])
+                exit(0)
+            else:
+                usage()
+                exit(0)
+        if argvs[2] == "--dir" or argvs[2] == "-d":
+            if len(argvs) < 6:
+                usage()
+                exit(0)
+            if argvs[4] == "--env" or argvs[4] == "-e":
+                if len(argvs[5].split(".")) != 2:
+                    print "Enviorment file is invliad!"
+                    exit(0)
+                if argvs[5].split(".")[1] != "json":
+                    print "Enviorment file is invliad!"
+                    exit(0)
+                if len(argvs) == 8 and argvs[6] == "--report":
+                    if len(argvs[7].split(".")) !=2:
+                        print "Report file name is invlid!"
+                        exit(0)
+                    if argvs[7].split(".")[1] != "html":
+                        print "Report file name is invlid!"
+                        exit(0)
+                    run_dir_testcase(argvs[3],argvs[5],argvs[7])
                     exit(0)
                 run_dir_testcase(argvs[3],argvs[5])
                 exit(0)
@@ -256,18 +276,28 @@ if __name__ == "__main__":
                 usage()
                 exit(0)
     if argvs[1] == option[2]:
-        if len(argvs) < 3:
-            usage()
-            exit(0)
-        if argvs[2] not in option_tool:
-            usage()
-            exit(0)
-        if argvs[2] not in option_tool:
+        if len(argvs) != 6:
             usage()
             exit(0)
         if argvs[2] == "--generate" or argvs[2] == "-g":
-            if len(argvs) != 4:
-                usage()
+            if len(argvs[3].split(".")) != 2:
+                print "Case file is invliad!"
                 exit(0)
-            get_case_file(argvs[3])
+            if argvs[3].split(".")[1] != "py":
+                print "Case file is invliad!"
+                exit(0)
+        else:
+            usage()
+            exit(0)
+        if argvs[4] == "--env" or argvs[4] == "-e":
+            if len(argvs[5].split(".")) != 2:
+                print "Enviorment file is invliad!"
+                exit(0)
+            if argvs[5].split(".")[1] != "json":
+                print "Enviorment file is invliad!"
+                exit(0)
+            get_case_file(argvs[3],argvs[5])
+            exit(0)
+        else:
+            usage()
             exit(0)

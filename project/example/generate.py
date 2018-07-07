@@ -16,7 +16,7 @@ from config.env import Ftest
 
 PROJECT_NAME = ""
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
@@ -29,7 +29,7 @@ class CLASS_NAME(unittest.TestCase):
         print "test ending!"
 
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
@@ -42,7 +42,7 @@ class CLASS_NAME(unittest.TestCase):
         print "test ending!"
 
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
@@ -55,7 +55,7 @@ class CLASS_NAME(unittest.TestCase):
         print "test ending!"
 
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
@@ -68,7 +68,7 @@ class CLASS_NAME(unittest.TestCase):
         print "test ending!"
 
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
@@ -81,7 +81,7 @@ class CLASS_NAME(unittest.TestCase):
         print "test ending!"
 
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
@@ -94,7 +94,7 @@ class CLASS_NAME(unittest.TestCase):
         print "test ending!"
 
 
-class CLASS_NAME(unittest.TestCase):
+class UserLogin(unittest.TestCase):
     desc = "DESC"
 
     def setUp(self):
