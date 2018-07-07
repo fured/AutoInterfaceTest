@@ -287,3 +287,12 @@ B.执行指定目录的信息
 > Ftest   run  -d  dirname   -e  env.json     #运行dirname目录下的所有用例
 >
 > Ftest   run  -d  dirname   -e  env.json   --report  result.html   #运行dirname目录下的所有用例并生成报告result.html
+
+### 3 END
+
+如代码有错误或者有更好的修改，欢迎斧正！可上传至Ftest1.0分支，谢谢！
+
+
+
+
+

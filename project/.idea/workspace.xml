@@ -35,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataapi.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dataapi.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/dataapi.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-532">
@@ -43,6 +43,15 @@
               <folding>
                 <element signature="e#43#54#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Fassert.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/Fassert.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="688">
+              <caret line="94" column="42" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -555,13 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Fassert.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="94" column="42" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/linux_log.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -740,6 +742,13 @@
           <folding>
             <element signature="e#43#54#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Fassert.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="688">
+          <caret line="94" column="42" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="42" />
         </state>
       </provider>
     </entry>
