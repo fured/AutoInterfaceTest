@@ -288,6 +288,16 @@ B.执行指定目录的信息
 >
 > Ftest   run  -d  dirname   -e  env.json   --report  result.html   #运行dirname目录下的所有用例并生成报告result.html
 
+#### 2.7 效果
+
+执行效果如下图：
+
+![](.\xiaoguo.PNG)
+
+生成报告形式如下图：
+
+![](.\report.PNG)
+
 ### 3 END
 
 如代码有错误或者有更好的修改，欢迎斧正！可上传至Ftest1.0分支，谢谢！
