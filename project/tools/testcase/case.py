@@ -6,8 +6,8 @@ class CLASS_NAME(object):
         Flog.output("start test...")
 
     def test(self):
-
+        pass
 
     def tearDown(self):
-        Flog.output("start end.")
+        Flog.output("test end.")
 

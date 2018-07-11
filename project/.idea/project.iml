@@ -5,5 +5,7 @@
     <orderEntry type="jdk" jdkName="Python 2.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="dist" />
+    <orderEntry type="module" module-name="scripts" />
+    <orderEntry type="module" module-name="ReceiveData" />
   </component>
 </module>

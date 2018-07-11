@@ -195,7 +195,7 @@ def run(class_name,desc):
         j = j + 1
     j = 0
     while j < len(Fassert.Fassert_error_list):
-        assert_info[Fassert_error_list[j]] = 0
+        assert_info[Fassert.Fassert_error_list[j]] = 0
         j = j + 1
     case_data.append(assert_info)
 

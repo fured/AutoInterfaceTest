@@ -18,9 +18,9 @@ Fassert_right_list = []
 
 #desc:判断两个数是否相等，a == b
 def equal(message,compare_a,compare_b):
-    if type(compare_a) != type(compare_b):
-        Fassert_error_list.append(message)
-        return None
+    #if type(compare_a) != type(compare_b):
+    #   Fassert_error_list.append(message)
+    #   return None
     if compare_a != compare_b:
         Fassert_error_list.append(message)
     else:

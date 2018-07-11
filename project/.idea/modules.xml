@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://D:/work-local/receivedata/ReceiveData/.idea/ReceiveData.iml" filepath="D:/work-local/receivedata/ReceiveData/.idea/ReceiveData.iml" />
       <module fileurl="file://$USER_HOME$/Desktop/dist/.idea/dist.iml" filepath="$USER_HOME$/Desktop/dist/.idea/dist.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/project.iml" filepath="$PROJECT_DIR$/.idea/project.iml" />
+      <module fileurl="file://D:/work-svn/01-云眼项目/03-YY2.3.0/03-测试/02-爬虫/02-异常测试/scripts/.idea/scripts.iml" filepath="D:/work-svn/01-云眼项目/03-YY2.3.0/03-测试/02-爬虫/02-异常测试/scripts/.idea/scripts.iml" />
     </modules>
   </component>
 </project>

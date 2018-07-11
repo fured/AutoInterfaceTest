@@ -169,7 +169,8 @@ def write_case(fp,show_case):
                     if value == 1:
                         assert_info = assert_info + "<tr><td>" + key + "</td><td>" + str(value) + "</td><td>0</td></tr>"
                     else:
-                        assert_info = assert_info + "<tr><td>" + key + "</td><td>0</td><td>"+ str(value) +"</td></tr>"
+                        assert_info = assert_info + "<tr><td>" + key + "</td><td>"+str(value)+"</td><td>1</td></tr>"
+                        #assert_info = assert_info + "<tr><td>" + key + "</td><td>0</td><td>"+ str(value) +"</td></tr>"
             line = re.sub("ASSERT_INFO",assert_info,line)
         fp.write(line.encode("utf-8"))
     fp_case.close()
