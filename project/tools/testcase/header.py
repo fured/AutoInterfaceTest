@@ -2,9 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import json
-import sys
-import requests
-import unittest
 import platform
 
 from config.env import Ftest
