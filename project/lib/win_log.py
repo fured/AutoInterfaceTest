@@ -2,7 +2,9 @@
 #-*- coding: UTF-8 -*-
 
 import ctypes
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 #Author:fured
 #date:2018-07-03
 #desc:Output setting for windows operating
@@ -33,7 +35,7 @@ class Flog(object):
     @classmethod
     def output(cls,content):
         Flog.set_cmd_color(FOREGROUND_GREEN | FOREGROUND_BLUE)
-        print "    " + str(content)
+        print "    ".decode() + str(content)
         Flog.reset_color()
 
     @classmethod

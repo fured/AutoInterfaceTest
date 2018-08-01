@@ -34,10 +34,10 @@ class Template(object):
         fp_case.close()
         row = 0
         while row < len(case_list):
-            line_list[1] = re.sub("CLASS_NAME", case_list[row][1], line_list[1])
+            line_list[2] = re.sub("CLASS_NAME", case_list[row][1], line_list[2])
             for line in line_list:
                 fp_case_file.write(line)
-            line_list[1] = 'class CLASS_NAME(object):\n'
+            line_list[2] = 'class CLASS_NAME(object):\n'
             row = row + 1
 
     def generate_file(self,filename):

@@ -36,6 +36,7 @@ def clear():
     Request.params = None
     Request.headers = None
     Request.response = None
+    Request.files = None
 
 #desc：获取请求回复的一些信息
 class Response(object):
@@ -52,6 +53,11 @@ class Response(object):
     @staticmethod
     def Body(response):
         return response.text
+
+    #获取返回头部中的content
+    @staticmethod
+    def Content(response):
+        return response.content
 
     #获取发送的url
     @staticmethod
@@ -80,6 +86,7 @@ class Request(object):
     headers = None
     url = None
     response = None
+    files = None
     def __init__(self):
         pass
 
@@ -117,13 +124,24 @@ class Request(object):
         if Request.method == "post":
             if Request.params != None:
                 if Request.headers != None:
-                    Request.response = requests.post(Request.url,data=Request.params,headers=Request.headers)
-                    record()
-                    return Request.response
+                    if Request.files != None:
+                        Request.response = requests.post(Request.url,data=Request.params,headers=Request.headers,files=Request.files)
+                        record()
+                        return Request.response
+                    else:
+                        Request.response = requests.post(Request.url, data=Request.params, headers=Request.headers)
+                        record()
+                        return Request.response
+
                 else:
-                    Request.response = requests.post(Request.url, data=Request.params, headers=Request.headers)
-                    record()
-                    return Request.response
+                    if Request.files != None:
+                        Request.response = requests.post(Request.url, data=Request.params,files=Request.files)
+                        record()
+                        return Request.response
+                    else:
+                        Request.response = requests.post(Request.url, data=Request.params)
+                        record()
+                        return Request.response
 
             else:
                 if Request.headers != None:
