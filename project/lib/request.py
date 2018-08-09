@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 import requests
 
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 #Auther:fured
 #date:2018.07.02
 #desc:Packaging requests
@@ -93,6 +94,8 @@ class Request(object):
     #desc：发送http请求
     @staticmethod
     def send():
+        #关闭移除ssl证书认证后弹出的警告信息
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         if Request.method == None or Request.url == None:
             raise Exception("Request is error!")
             return None
@@ -102,54 +105,54 @@ class Request(object):
         if Request.method == "get":
             if Request.params != None:
                 if Request.headers != None:
-                    Request.response = requests.get(Request.url,params=Request.params,headers=Request.headers)
+                    Request.response = requests.get(Request.url,params=Request.params,headers=Request.headers,verify=False)
                     record()
                     return Request.response
 
                 else:
-                    Request.response = requests.get(Request.url, params=Request.params, headers=Request.headers)
+                    Request.response = requests.get(Request.url, params=Request.params, headers=Request.headers,verify=False)
                     record()
                     return Request.response
 
             else:
                 if Request.headers != None:
-                    Request.response = requests.get(Request.url,headers=Request.headers)
+                    Request.response = requests.get(Request.url,headers=Request.headers,verify=False)
                     record()
                     return Request.response
 
                 else:
-                    Request.response = requests.get(Request.url, headers=Request.headers)
+                    Request.response = requests.get(Request.url, headers=Request.headers,verify=False)
                     record()
                     return Request.response
         if Request.method == "post":
             if Request.params != None:
                 if Request.headers != None:
                     if Request.files != None:
-                        Request.response = requests.post(Request.url,data=Request.params,headers=Request.headers,files=Request.files)
+                        Request.response = requests.post(Request.url,data=Request.params,headers=Request.headers,files=Request.files,verify=False)
                         record()
                         return Request.response
                     else:
-                        Request.response = requests.post(Request.url, data=Request.params, headers=Request.headers)
+                        Request.response = requests.post(Request.url, data=Request.params, headers=Request.headers,verify=False)
                         record()
                         return Request.response
 
                 else:
                     if Request.files != None:
-                        Request.response = requests.post(Request.url, data=Request.params,files=Request.files)
+                        Request.response = requests.post(Request.url, data=Request.params,files=Request.files,verify=False)
                         record()
                         return Request.response
                     else:
-                        Request.response = requests.post(Request.url, data=Request.params)
+                        Request.response = requests.post(Request.url, data=Request.params,verify=False)
                         record()
                         return Request.response
 
             else:
                 if Request.headers != None:
-                    Request.response = requests.post(Request.url,headers=Request.headers)
+                    Request.response = requests.post(Request.url,headers=Request.headers,verify=False)
                     record()
                     return Request.response
 
                 else:
-                    Request.response = requests.post(Request.url, headers=Request.headers)
+                    Request.response = requests.post(Request.url, headers=Request.headers,verify=False)
                     record()
                     return Request.response
