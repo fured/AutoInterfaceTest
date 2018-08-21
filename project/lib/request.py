@@ -148,11 +148,21 @@ class Request(object):
 
             else:
                 if Request.headers != None:
-                    Request.response = requests.post(Request.url,headers=Request.headers,verify=False)
-                    record()
-                    return Request.response
-
+                    if Request.files != None:
+                        Request.response = requests.post(Request.url,headers=Request.headers,files=Request.files,verify=False)
+                        record()
+                        return Request.response
+                    else:
+                        Request.response = requests.post(Request.url, headers=Request.headers,verify=False)
+                        record()
+                        return Request.response
                 else:
-                    Request.response = requests.post(Request.url, headers=Request.headers,verify=False)
-                    record()
-                    return Request.response
+                    if Request.files != None:
+                        Request.response = requests.post(Request.url,files=Request.files,verify=False)
+                        record()
+                        return Request.response
+                    else:
+                        Request.response = requests.post(Request.url,verify=False)
+                        record()
+                        return Request.response
+              
