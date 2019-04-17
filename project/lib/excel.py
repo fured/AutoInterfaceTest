@@ -1,33 +1,47 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+"""
+Author:fured
+Date:2018.07.01
+Desc:Operation case excel table
+"""
+
 import xlrd
 
 from collections import defaultdict
 
-#Author:fured
-#date:2018.07.01
-#desc:Operation case excel table
 
 class Excel(object):
-    #desc:初始化用例表
-    #parameter:filename:用例表文件名
-    #          talename:用例表名
-    def __init__(self,filename,talename):
+    """
+    excel 表操作类
+    """
+    def __init__(self, filename, talename):
+        """
+        初始化用例表
+
+        :param self:
+        :param filename:用例表文件名
+        :param talename: 用例表名
+        :return:
+        """
         self.filename = filename
         self.tablename = talename
 
-    #desc:获取整张表的信息，除了两行标题
     def get_all_info(self):
-        #打开文件
+        """
+        获取整张表的信息，除了两行标题
+
+        :return:
+        """
         wb = xlrd.open_workbook(self.filename)
-        #判断表是否存在
+        # 判断表是否存在
         sheetname = []
         for sheet in wb.sheets():
             sheetname.append(sheet.name)
         if self.tablename not in sheetname:
             return "table " + self.tablename + " not exist!"
-        #获取tablename表的内容，从第三行开始
+        # 获取tablename表的内容，从第三行开始
         ws = wb.sheet_by_name(self.tablename)
         rows = 2
         data = []
@@ -36,14 +50,14 @@ class Excel(object):
             data.append(list)
             cols = 0
             while cols <ws.ncols:
-                if type(ws.cell_value(rows,cols)) == float or type(ws.cell_value(rows,cols)) == int:
-
+                if type(ws.cell_value(rows,cols)) == float or \
+                        type(ws.cell_value(rows,cols)) == int:
                     list.append(str(int(ws.cell_value(rows,cols))))
                 else:
                     list.append(ws.cell_value(rows,cols))
                 cols = cols + 1
             rows = rows + 1
-        #将空格填满，由于表格进行了合并单元格，所以有很多空格
+        # 将空格填满，由于表格进行了合并单元格，所以有很多空格
         col = 3
         while col < len(data[0]):
             row = 0
@@ -54,7 +68,7 @@ class Excel(object):
                             data[row][col] = data[row - 1][col]
                 row = row + 1
             col = col + 1
-        #删除空格，这时的空格是由于目录各个用例的目录层级不同导致的，应该删除
+        # 删除空格，这时的空格是由于目录各个用例的目录层级不同导致的，应该删除
         cols = len(data[0]) - 1
         row = 0
         while row < len(data):
@@ -68,8 +82,12 @@ class Excel(object):
             row = row + 1
         return data
 
-    #desc：返回所有的案例信息
     def get_all_case(self):
+        """
+        返回所有的用例信息
+
+        :return:
+        """
         data = self.get_all_info()
         case_data = []
         cols = [1,2]
@@ -82,9 +100,13 @@ class Excel(object):
             row = row + 1
         return case_data
 
-    #desc:返回指定的一个或多个用例信息
-    #parameter：case_no：用例编号
-    def get_case(self,case_no):
+    def get_case(self, case_no):
+        """
+        返回指定的一个或多个用例信息
+
+        :param case_no:用例编号
+        :return:
+        """
         data = self.get_all_info()
         data_list = []
         case_row = None
@@ -104,9 +126,13 @@ class Excel(object):
             i = i + 1
         return data_list
 
-    #desc:返回指定文件夹中所有的用例信息
-    #parameter:dirname：文件夹的名字
-    def get_cases(self,dirname):
+    def get_cases(self, dirname):
+        """
+        返回指定文件夹中的所有用例信息
+
+        :param dirname: 文件夹名
+        :return:
+        """
         dir_data = self.get_dir_tree(dirname)
         if dir_data == False:
             print "The dictory is not Exist"
@@ -123,8 +149,11 @@ class Excel(object):
             row = row + 1
         return data_list
 
-    #desc：返回整个目录的信息
     def get_all_tree(self):
+        """
+        返回整个目录的信息
+        :return:
+        """
         data = self.get_all_info()
         i = 0
         while i < len(data):
@@ -136,10 +165,14 @@ class Excel(object):
             i = i + 1
         return data
 
-    #desc：返回指定目录的目录树信息
-    def get_dir_tree(self,dirname):
+    def get_dir_tree(self, dirname):
+        """
+        返回指定目录的目录树信息
+        :param dirname:
+        :return:
+        """
         data = self.get_all_info()
-        #找到对应文件夹起始位置
+        # 找到对应文件夹起始位置
         find = False
         dir_col = None
         dir_row = None
@@ -159,7 +192,7 @@ class Excel(object):
             row = row + 1
         if dir_col == None or dir_row == None:
             return False
-        #找到对应文件夹结束的行
+        # 找到对应文件夹结束的行
         dir_last_row = None
         find_row = dir_row + 1
         while find_row  < len(data):
@@ -169,7 +202,7 @@ class Excel(object):
             find_row = find_row + 1
         if dir_last_row == None:
             dir_last_row = len(data)
-        #转换顺序
+        # 转换顺序
         dir_data = []
         row = dir_row
         while row < dir_last_row:
