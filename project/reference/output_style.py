@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-#Author:fured
-#date:2018.06.30
-#desc:Linux 有颜色输出
+"""
+Author:fured
+date:2018.06.30
+desc:Linux 有颜色输出
+"""
 
 STYLE = {
     'fore': {

@@ -10,106 +10,127 @@ from run import Run
 from tools.report import Report
 from tools.template import Template
 
-#Auther:fured
-#date:2018.07.01
-#desc:Entrance for Ftest test system
+"""
+Auther:fured
+date:2018.07.01
+desc:Entrance for Ftest test system
+"""
 
 
-#desc:生成一份测试用例编写的模板
-#parameter:filename:生成模板即文件的名字，文件名字必须为：XXX.py（必选）
-#          env_file:测试所需要的环境变量，使用json文件的形式给出（必选）
-#                   其中，必须有的环境变量："testexcel"：测试用例表文件
-#                                      "tablename":测试用例表文件中，具体的哪张表,
-def get_case_file(filename,env_file):
-    #初始化环境变量
+def get_case_file(filename, env_file):
+    """
+    生成一份测试用例文件
+
+    :param filename: 生成模板即文件的名字，文件名字必须为：XXX.py（必选）
+    :param env_file: 测试所需要的环境变量即设置，使用json文件的形式给出（必选）
+                    其中，必须有的环境变量："testexcel"：测试用例表文件
+                                         "tablename":测试用例表文件中，具体的哪张表
+    :return:
+    """
+    # 初始化环境变量
     Ftest.init(env_file)
     template = Template(Ftest.testexcel,Ftest.tablename)
     template.generate_file(filename)
 
-#desc:运行一个或者指定的某几个测试用例
-#parameters：case_no:需要运行的测试用例的编号，多个时使用逗号分隔，如：“1，2，5”（必选）
-#            env_file：测试所需要的环境变量，使用json文件的形式给出（必选）
-#                     其中，必须有的环境变量："testexcel"：测试用例表文件
-#                                        "tablename":测试用例表文件中，具体的哪张表,
-#                                        "case":测试用例文件名，不带".py"
-#            report_name:生成报告的文件名，必须是html文件（可选）
-def run_one_testcase(case_no,env_file,report_name = None):
+
+def run_one_testcase(case_no, env_file, report_name=None):
+    """
+    运行一个或者指定的某几个测试用例
+
+    :param case_no: 需要运行的测试用例的编号，多个时使用逗号分隔，如：“1，2，5”（必选）
+    :param env_file: 测试所需要的环境变量，使用json文件的形式给出（必选）
+    :param report_name: 生成报告的文件名，必须是html文件（可选）
+    :return:
+    """
     # 初始化环境变量
     Ftest.init(env_file)
     case_list = case_no.split(",")
     class_name_list = []
     i = 0
     while i < len(case_list):
-        class_name = Excel(Ftest.testexcel,Ftest.tablename).get_case(case_list[i])
+        class_name = Excel(Ftest.testexcel, Ftest.tablename).get_case(case_list[i])
         class_name_list.append(class_name)
         i = i + 1
-    #运行测试
+    # 运行测试
     Run().run_one_case(class_name_list)
-    if report_name != None:
-        #生成测试报告
-        report = Report(class_name_list,report_name)
-        report.generate_one_html(run.INFO_REPORT,run.INFO_CASE)
+    if report_name is not None:
+        # 生成测试报告
+        report = Report(class_name_list, report_name)
+        report.generate_one_html(run.INFO_REPORT, run.INFO_CASE)
         pass
     return None
 
-#desc:运行指定文件夹下的所有用例
-#parameters:dir_name:文件夹的名字
-#           env_file：测试所需要的环境变量，使用json文件的形式给出（必选）
-#                     其中，必须有的环境变量："testexcel"：测试用例表文件
-#                                        "tablename":测试用例表文件中，具体的哪张表,
-#                                        "case":测试用例文件名，不带".py"
-#           report_name:生成报告的文件名，必须是html文件（可选）
-def run_dir_testcase(dir_name,env_file,report_name = None):
-    #初始化环境
+
+def run_dir_testcase(dir_name, env_file, report_name=None):
+    """
+    运行指定文件夹下的所有用例
+
+    :param dir_name: 文件夹的名字
+    :param env_file: 测试所需要的环境变量，使用json文件的形式给出（必选）
+    :param report_name: 生成报告的文件名，必须是html文件（可选）
+    :return:
+    """
+    # 初始化环境
     Ftest.init(env_file)
     dir_name = dir_name.decode("GB2312")
     dir_name = dir_name.encode("utf-8")
-    class_list = Excel(Ftest.testexcel,Ftest.tablename).get_cases(dir_name.decode('utf-8'))
-    #运行测试
+    class_list = Excel(Ftest.testexcel, Ftest.tablename).get_cases(dir_name.decode('utf-8'))
+    # 运行测试
     Run().run_dir_case(class_list)
-    if report_name != None:
-        #生成测试报告
-        report = Report(class_list,report_name)
-        report.generate_dir_html(run.INFO_REPORT,run.INFO_CASE)
+    if report_name is not None:
+        # 生成测试报告
+        report = Report(class_list, report_name)
+        report.generate_dir_html(run.INFO_REPORT, run.INFO_CASE)
 
         pass
     return None
 
 
-#desc:展示测试用例整体的目录结构
-#parmeters:env_file：测试所需的环境变量（必选）
-#                    其中，必须有的环境变量："testexcel"：测试用例表文件
-#                                        "tablename":测试用例表文件中，具体的哪张表
 def show_all_testcase(env_file):
-    #初始化环境变量
+    """
+    展示测试用例整体的目录结构
+
+    :param env_file: 测试所需的环境变量（必选）
+    :return:
+    """
+    # 初始化环境变量
     Ftest.init(env_file)
-    #获取目录信息数据
-    data = Excel(Ftest.testexcel,Ftest.tablename).get_all_tree()
-    #展示目录树
+    # 获取目录信息数据
+    data = Excel(Ftest.testexcel, Ftest.tablename).get_all_tree()
+    # 展示目录树
     show(data)
     return None
 
-#desc:展示指定目录的结构信息
-#parmeters:env_file：测试所需的环境变量（必选）
-#                    其中，必须有的环境变量："testexcel"：测试用例表文件
-#                                        "tablename":测试用例表文件中，具体的哪张表
-def show_dir_testcase(dirname,env_file):
-    #初始化环境变量
+
+def show_dir_testcase(dirname, env_file):
+    """
+    展示指定目录的结构信息
+
+    :param dirname:文件夹名
+    :param env_file: 测试所需的环境变量（必选）
+    :return:
+    """
+    # 初始化环境变量
     Ftest.init(env_file)
     dirname = dirname.decode("GB2312")
     dirname = dirname.encode("utf-8")
-    #获取目录信息数据
+    # 获取目录信息数据
     data = Excel(Ftest.testexcel, Ftest.tablename).get_dir_tree(dirname.decode('utf-8'))
-    if data == False:
-        print "The table:"+dirname.decode('utf-8')+" not exist!"
+    if data is False:
+        print "The table:" + dirname.decode('utf-8') + " not exist!"
         return None
-    #展示目录树
+    # 展示目录树
     show(data)
     return None
 
-#desc:目录树展示函数
-#parameter：data:目录结构信息数据
+
 def show(data):
+    """
+    目录树展示函数
+
+    :param data: 目录结构信息数据
+    :return:
+    """
     row = 0
     while row < len(data):
         space_length = 0
@@ -151,8 +172,13 @@ def show(data):
             col = col + 1
         row = row + 1
 
-#desc:Ftest 使用说明
+
 def usage():
+    """
+    Ftest 使用说明
+
+    :return:
+    """
     print "[Usage]:Ftest action option"
     print ""
     print 'Example:Ftest run -o "1,2,5" -e xxx.json --report xxxx.html'
@@ -175,13 +201,15 @@ def usage():
     print '        option:--env/-e   "The environment variables,use json file"'
 
 
-#desc:Entrance
 if __name__ == "__main__":
-    #提供的服务
-    option = ["run","info","tool"]
-    option_run = ["--only","-o","--dir","-d","--env","-e","--report"]
-    option_info = ["--tree","-t","--dir","-d","--env","-e"]
-    option_tool = ["--generate","-g","--env","-e"]
+    """
+    Entrance入口
+    """
+    # 提供的服务
+    option = ["run", "info", "tool"]
+    option_run = ["--only", "-o", "--dir", "-d", "--env", "-e", "--report"]
+    option_info = ["--tree", "-t", "--dir", "-d", "--env", "-e"]
+    option_tool = ["--generate", "-g", "--env", "-e"]
     argvs = sys.argv
     if len(argvs) < 2:
         print "Please use the right way."
@@ -193,7 +221,7 @@ if __name__ == "__main__":
         print "No the action:" + argvs[1]
         usage()
         exit(0)
-    #"run"运行测试用例
+    # "run"运行测试用例
     if argvs[1] == option[0]:
         if len(argvs) < 3:
             usage()
@@ -207,21 +235,21 @@ if __name__ == "__main__":
                 exit(0)
             if argvs[4] == "--env" or argvs[4] == "-e":
                 if len(argvs[5].split(".")) != 2:
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 if argvs[5].split(".")[1] != "json":
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 if len(argvs) == 8 and argvs[6] == "--report":
                     if len(argvs[7].split(".")) !=2:
-                        print "Report file name is invlid!"
+                        print "Report file name is invalid!"
                         exit(0)
                     if argvs[7].split(".")[1] != "html":
-                        print "Report file name is invlid!"
+                        print "Report file name is invalid!"
                         exit(0)
-                    run_one_testcase(argvs[3],argvs[5],argvs[7])
+                    run_one_testcase(argvs[3], argvs[5], argvs[7])
                     exit(0)
-                run_one_testcase(argvs[3],argvs[5])
+                run_one_testcase(argvs[3], argvs[5])
                 exit(0)
             else:
                 usage()
@@ -232,26 +260,26 @@ if __name__ == "__main__":
                 exit(0)
             if argvs[4] == "--env" or argvs[4] == "-e":
                 if len(argvs[5].split(".")) != 2:
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 if argvs[5].split(".")[1] != "json":
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 if len(argvs) == 8 and argvs[6] == "--report":
-                    if len(argvs[7].split(".")) !=2:
-                        print "Report file name is invlid!"
+                    if len(argvs[7].split(".")) != 2:
+                        print "Report file name is invalid!"
                         exit(0)
                     if argvs[7].split(".")[1] != "html":
-                        print "Report file name is invlid!"
+                        print "Report file name is invalid!"
                         exit(0)
-                    run_dir_testcase(argvs[3],argvs[5],argvs[7])
+                    run_dir_testcase(argvs[3], argvs[5], argvs[7])
                     exit(0)
-                run_dir_testcase(argvs[3],argvs[5])
+                run_dir_testcase(argvs[3], argvs[5])
                 exit(0)
             else:
                 usage()
                 exit(0)
-    #"info"展示测试用例信息
+    # "info"展示测试用例信息
     if argvs[1] == option[1]:
         if len(argvs) < 3:
             usage()
@@ -265,10 +293,10 @@ if __name__ == "__main__":
                 exit(0)
             if argvs[3] == "--env" or argvs[3] == "-e":
                 if len(argvs[4].split(".")) != 2:
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 if argvs[4].split(".")[1] != "json":
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 show_all_testcase(argvs[4])
                 exit(0)
@@ -281,39 +309,39 @@ if __name__ == "__main__":
                 exit()
             if argvs[4] == "-env" or argvs[4] == "-e":
                 if len(argvs[5].split(".")) != 2:
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
                 if argvs[5].split(".")[1] != "json":
-                    print "Enviorment file is invliad!"
+                    print "Environment file is invalid!"
                     exit(0)
-                show_dir_testcase(argvs[3],argvs[5])
+                show_dir_testcase(argvs[3], argvs[5])
                 exit(0)
             else:
                 usage()
                 exit(0)
-    #"tool"提供的工具
+    # "tool"提供的工具
     if argvs[1] == option[2]:
         if len(argvs) != 6:
             usage()
             exit(0)
         if argvs[2] == "--generate" or argvs[2] == "-g":
             if len(argvs[3].split(".")) != 2:
-                print "Case file is invliad!"
+                print "Case file is invalid!"
                 exit(0)
             if argvs[3].split(".")[1] != "py":
-                print "Case file is invliad!"
+                print "Case file is invalid!"
                 exit(0)
         else:
             usage()
             exit(0)
         if argvs[4] == "--env" or argvs[4] == "-e":
             if len(argvs[5].split(".")) != 2:
-                print "Enviorment file is invliad!"
+                print "Environment file is invalid!"
                 exit(0)
             if argvs[5].split(".")[1] != "json":
-                print "Enviorment file is invliad!"
+                print "Environment file is invalid!"
                 exit(0)
-            get_case_file(argvs[3],argvs[5])
+            get_case_file(argvs[3], argvs[5])
             exit(0)
         else:
             usage()

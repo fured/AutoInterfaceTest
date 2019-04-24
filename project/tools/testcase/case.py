@@ -1,7 +1,8 @@
 
-#desc = "DESC"
 class CLASS_NAME(object):
-
+    """
+    desc:
+    """
     def setUp(self):
         Flog.output("start test...")
 

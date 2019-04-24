@@ -50,11 +50,11 @@ class Excel(object):
             data.append(list)
             cols = 0
             while cols <ws.ncols:
-                if type(ws.cell_value(rows,cols)) == float or \
-                        type(ws.cell_value(rows,cols)) == int:
-                    list.append(str(int(ws.cell_value(rows,cols))))
+                if type(ws.cell_value(rows, cols)) == float or \
+                        type(ws.cell_value(rows, cols)) == int:
+                    list.append(str(int(ws.cell_value(rows, cols))))
                 else:
-                    list.append(ws.cell_value(rows,cols))
+                    list.append(ws.cell_value(rows, cols))
                 cols = cols + 1
             rows = rows + 1
         # 将空格填满，由于表格进行了合并单元格，所以有很多空格
@@ -116,7 +116,7 @@ class Excel(object):
                 case_row = row
                 break
             row = row + 1
-        if case_row == None:
+        if case_row is None:
             print "The Case Not Exist!"
             exit(0)
             return None
@@ -190,31 +190,31 @@ class Excel(object):
             if find:
                 break
             row = row + 1
-        if dir_col == None or dir_row == None:
+        if dir_col is None or dir_row is None:
             return False
         # 找到对应文件夹结束的行
         dir_last_row = None
         find_row = dir_row + 1
-        while find_row  < len(data):
+        while find_row < len(data):
             if data[find_row][col] != dirname:
                 dir_last_row = find_row
                 break
             find_row = find_row + 1
-        if dir_last_row == None:
+        if dir_last_row is None:
             dir_last_row = len(data)
         # 转换顺序
         dir_data = []
         row = dir_row
         while row < dir_last_row:
-            list = []
-            dir_data.append(list)
+            list_ = []
+            dir_data.append(list_)
             col = dir_col
             while col < len(data[row]):
-                list.append(data[row][col])
+                list_.append(data[row][col])
                 col = col + 1
             col = 0
             while col < 3:
-                list.append(data[row][col])
+                list_.append(data[row][col])
                 col = col + 1
             row = row + 1
         return dir_data

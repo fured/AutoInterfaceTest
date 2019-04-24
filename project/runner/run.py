@@ -1,5 +1,5 @@
 #!/bin/python
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 import datetime
 import platform
@@ -17,48 +17,55 @@ if platform.system() == "Linux":
 else:
     from lib.win_log import Flog
 
-#一个用例在运行过程中的所有断言错误
+# 一个用例在运行过程中的所有断言错误
 ALL_ERROR = []
-#一个用例运行过程中出现的所有异常
+# 一个用例运行过程中出现的所有异常
 ALL_EXCEPT = []
 
-#一次测试后报告需要的统计信息
+# 一次测试后报告需要的统计信息
+"""
+example：
+INFO_REPORT = {
+    "suite_name":"Ftest",
+    "suite_desc":"Ftest desc",
+    "start_time":"Wed Jun 20 2018 16:33:20 GMT+0800 (中国标准时间)",
+    "case_count":{
+        "total":12,
+        "fail":2
+    },
+    "assert_count":{
+        "total":24,
+        "fail":4
+    },
+    "run_time":5.3,#秒，s
+    "data_size":20.2,#KB
+    "avg_reponse_time":12#毫秒，ms
+}
+"""
 INFO_REPORT = {}
-#example：
-#INFO_REPORT = {
-#    "suite_name":"Ftest",
-#    "suite_desc":"Ftest desc",
-#    "start_time":"Wed Jun 20 2018 16:33:20 GMT+0800 (中国标准时间)",
-#    "case_count":{
-#        "total":12,
-#        "fail":2
-#    },
-#    "assert_count":{
-#        "total":24,
-#        "fail":4
-#    },
-#    "run_time":5.3,#秒，s
-#    "data_size":20.2,#KB
-#    "avg_reponse_time":12#毫秒，ms
-#}
 
-#一次测试后，每个用例的信息
+# 一次测试后，每个用例的信息
+"""
+example：
+INFO_CASE = [
+    ["name","method","url","response_time","data_size","ststus_code",{"assert_name":1/0,"assert_name":1/0}],
+    ["name","method","url","response_time","data_size","ststus_code",{"assert_name":1/0,"assert_name":1/0}]
+]
+"""
 INFO_CASE = []
-#example：
-#INFO_CASE = [
-#    ["name","method","url","response_time","data_size","ststus_code",{"assert_name":1/0,"assert_name":1/0}],
-#    ["name","method","url","response_time","data_size","ststus_code",{"assert_name":1/0,"assert_name":1/0}]
-#]
 
-#在打印过程中标记目录
+# 在打印过程中标记目录
 window_dir_sign = ">"
 
+
 class Run(object):
-    def __init__(self):
-        pass
-    #desc:运行指定的一个或几个用力
-    #parameter：case_list:需要运行的案例列表
-    def run_one_case(self,case_list):
+    def run_one_case(self, case_list):
+        """
+        运行指定的一个或几个用例
+
+        :param case_list: 需要运行的案例列表
+        :return:
+        """
         imp_module = __import__(Ftest.case)
         name = 'Project: ' + imp_module.project_name
         Flog.nameout(name)
@@ -91,9 +98,12 @@ class Run(object):
         end()
         return None
 
-    # desc:运行指定文件夹的案例
-    # parameter：case_list:需要运行的案例列表
-    def run_dir_case(self,case_list):
+    def run_dir_case(self, case_list):
+        """
+        运行指定文件夹的案例
+        :param case_list: 需要运行的案例列表
+        :return:
+        """
         imp_module = __import__(Ftest.case)
         name = "Project: " + imp_module.project_name
         Flog.nameout(name)
@@ -119,8 +129,8 @@ class Run(object):
                         Flog.nameout(" " * space_len + "-> " + case_list[row][col] + ":" + case_list[row][col + 1])
                         try:
                             class_name = getattr(imp_module,case_list[row][len(case_list[row]) - 1])
-                            run(class_name,case_list[row][len(case_list[row]) - 3] + case_list[row][len(case_list[row]) - 2])
-                        except Exception,error:
+                            run(class_name, case_list[row][len(case_list[row]) - 3] + case_list[row][len(case_list[row]) - 2])
+                        except Exception, error:
                             exce = []
                             ALL_EXCEPT.append(exce)
                             exce.append(case_list[row][len(case_list[row]) - 3] + case_list[row][len(case_list[row]) - 2])
@@ -128,7 +138,7 @@ class Run(object):
                             Flog.error(traceback.format_exc())
                     else:
                         print ""
-                        Flog.nameout(" " * space_len +window_dir_sign  + case_list[row][col])
+                        Flog.nameout(" " * space_len + window_dir_sign  + case_list[row][col])
                     if col == 0:
                         space_length = space_length + len(case_list[row][col])
                     else:
@@ -143,7 +153,7 @@ class Run(object):
                         if col == 0:
                             pass
                         if col == len(case_list[row]) - 3:
-                            Flog.nameout(" " * space_len  + "-> " + case_list[row][col] + ":" + case_list[row][col + 1])
+                            Flog.nameout(" " * space_len + "-> " + case_list[row][col] + ":" + case_list[row][col + 1])
                             try:
                                 class_name = getattr(imp_module, case_list[row][len(case_list[row]) - 1])
                                 run(class_name,
@@ -167,10 +177,15 @@ class Run(object):
         end()
         return None
 
-#desc:运行一个案例
-#parameter:class_name:案例的类名
-#          desc:案例的描述信息
-def run(class_name,desc):
+
+def run(class_name, desc):
+    """
+    运行一个案例
+
+    :param class_name: 案例的类名
+    :param desc: 案例的描述信息
+    :return:
+    """
     case = class_name()
     print ""
     case.setUp()
@@ -211,7 +226,7 @@ def run(class_name,desc):
         error.append(desc)
         while assert_count < len(Fassert.Fassert_error_list):
             error.append(Fassert.Fassert_error_list[assert_count])
-            Flog.error(Fassert.ERROR_SIGN +  Fassert.Fassert_error_list[assert_count])
+            Flog.error(Fassert.ERROR_SIGN + Fassert.Fassert_error_list[assert_count])
             assert_count = assert_count + 1
     print ""
     INFO_REPORT["assert_count"]["total"] = INFO_REPORT["assert_count"]["total"] + len(Fassert.Fassert_right_list) + len(Fassert.Fassert_error_list)
@@ -219,9 +234,14 @@ def run(class_name,desc):
     Fassert.Fassert_right_list = []
     Fassert.Fassert_error_list = []
 
-#一次测试结束后的收尾函数
+
 def end():
-    print "END" + "-"* 100
+    """
+    一次测试结束后的收尾函数
+
+    :return:
+    """
+    print "END" + "-" * 100
     print ""
     Flog.error("#Failure" + " "*45 + "#detial")
     print ""
@@ -263,4 +283,3 @@ def end():
         i = i + 1
     INFO_REPORT["avg_response_time"] = round(response_time / INFO_REPORT["case_count"]["total"],3)
     return None
-

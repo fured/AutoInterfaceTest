@@ -25,27 +25,27 @@ class Flog(object):
         pass
 
     @classmethod
-    def output(content):
+    def output(cls, content):
         print '    %s%s%s' % (FOREGROUND_BLUE, content, END)
         return None
 
     @classmethod
-    def error(content):
+    def error(cls, content):
         print '    %s%s%s' % (FOREGROUND_RED,content,END)
         return None
 
     @classmethod
-    def errornotline(content):
+    def errornotline(cls, content):
         print ('    %s%s%s' % (FOREGROUND_RED, content, END)),
         return None
 
     @classmethod
-    def right(content):
-        print '    %s%s%s' % (FOREGROUND_GREEN,content,END)
+    def right(cls, content):
+        print '    %s%s%s' % (FOREGROUND_GREEN, content, END)
         return None
 
     @classmethod
-    def nameout(content):
-        print '%s%s%s' % (FOREGROUND_BringWhite,content,END)
+    def nameout(cls, content):
+        print '%s%s%s' % (FOREGROUND_BringWhite, content, END)
         return None
 

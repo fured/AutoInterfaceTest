@@ -13,11 +13,13 @@ if platform.system() == "Linux":
 else:
     from lib.win_log import Flog
 
-#Author:fured
-#date:2018.06.30
-#desc:interface test case
+"""
+Author:fured
+Date:2018.06.30
+Desc:interface test case
+"""
 
 project_name = "Data Api"
 desc = ""
 
-#mongo connect pool
+# mongo connect pool
